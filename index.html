@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O Nosso Jantar</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://images.unsplash.com/photo-1501973801540-537f08ccae7d?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hidden {
+      display: none;
+    }
+    button {
+      background-color: #ec407a;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #d81b60;
+    }
+    .fade {
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .show {
+      opacity: 1;
+    }
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 5s infinite;
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(45deg); }
+      100% { transform: translateY(-100vh) rotate(45deg); }
+    }
+  </style>
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    O seu navegador não suporta áudio HTML5.
+  </audio>
+
+  <div id="step1">
+    <h1>Meu Amor ❤️, tenho um convite muito especial para te fazer… Estás Preparada?</h1>
+    <button onclick="nextStep(1)">Clica para descobrir</button>
+  </div>
+
+  <div id="step2" class="hidden">
+    <h2>Desde que entraste na minha vida,<br> cada momento contigo tem sido um presente… És a pessoa mais incrível que conheci.</h2>
+    <button onclick="nextStep(2)">Continua</button>
+  </div>
+
+  <div id="step3" class="hidden">
+    <h2>Quero criar mais uma memória contigo.<br> Aceitas jantar comigo no esta sexta-feira (27/06)?</h2>
+    <button onclick="showFinal(true)">Sim, claro ❤️</button>
+    <button onclick="showMore()">Conta-me mais…</button>
+  </div>
+
+  <div id="moreInfo" class="hidden">
+    <p>Gostaria de estar num jantar romântico contigo, num local fantástico, onde podemos admirar o pôr do sol, enquanto jantamos a dois. <strong>Restaurante Chão do Prado, Bucelas</strong>.<br> Juro que será mais um momento muito especial que vai ficar eternizado ✨</p>
+  </div>
+
+  <div id="finalMessage" class="hidden">
+    <h2>Mal posso esperar para te ver, para estar contigo... 💌 <br>Com todo o meu amor, tu és a mulher da minha vida. Carlos Santos</h2>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+
+  <script>
+    function nextStep(step) {
+      document.getElementById(`step${step}`).classList.add("hidden");
+      document.getElementById(`step${step + 1}`).classList.remove("hidden");
+    }
+
+    function showMore() {
+      document.getElementById("moreInfo").classList.remove("hidden");
+    }
+
+    function showFinal(animate) {
+      document.getElementById("step3").classList.add("hidden");
+      document.getElementById("moreInfo").classList.add("hidden");
+      document.getElementById("finalMessage").classList.remove("hidden");
+      if (animate) {
+        createHearts();
+      }
+    }
+
+    function createHearts() {
+      const hearts = document.getElementById("hearts");
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.top = `${Math.random() * 100}%`;
+        heart.style.animationDuration = `${Math.random() * 3 + 3}s`;
+        hearts.appendChild(heart);
+      }
+    }
+  </script>
+</body>
+</html>
